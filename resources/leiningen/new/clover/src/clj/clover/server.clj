@@ -29,24 +29,27 @@
       (optimizations/add-cache-busted-expires-headers)
       (optimizations/add-last-modified-headers)))
 
+(defn- asset-config [freeze-assets?]
+  (if freeze-assets?
+    {:js advanced-js
+     :strategy strategies/serve-frozen-assets}
+    {:js expanded-js
+     :strategy strategies/serve-live-assets}))
+
 (defn render-layout [js]
   (html5
    [:head
     [:title "FIXME: {{name}}"]]
    [:body (cons [:main#app] js)]))
 
-(defn- make-routes [freeze-assets?]
+(defn- make-routes [js-fn]
   (routes
-   (GET "/" req (render-layout (if freeze-assets?
-                                 (advanced-js req)
-                                 (expanded-js req))))
+   (GET "/" req (render-layout (js-fn req)))
    (route/not-found "Not found! <a href=\"Back\"></a>")))
 
 (defn make-handler [{:keys [debug-exceptions? freeze-assets?]}]
-  (let [asset-strategy (if freeze-assets?
-                         strategies/serve-frozen-assets
-                         strategies/serve-live-assets)]
-    (-> (make-routes freeze-assets?)
-        (optimus/wrap get-assets asset-optimizations asset-strategy)
+  (let [{:keys [js strategy]} (asset-config freeze-assets?)]
+    (-> (make-routes js)
+        (optimus/wrap get-assets asset-optimizations strategy)
         (cond-> debug-exceptions? prone/wrap-exceptions)
         (wrap-defaults site-defaults))))

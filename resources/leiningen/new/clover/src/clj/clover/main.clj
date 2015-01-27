@@ -5,17 +5,17 @@
             [{{ns}}.components.http :refer [new-http]]
             [com.stuartsierra.component :as component]))
 
-(defn- true? [k]
+(defn- env-true? [k]
   (= (System/getenv k) "true"))
 
-(defn- int [k]
+(defn- env-int [k]
   (if-let [port-string (System/getenv k)]
     (Integer/parseInt port-string)))
 
 (defn- config []
-  (let [port (or (int "PORT") 3000)
-        freeze-assets? (true? "FREEZE_ASSETS")
-        debug-exceptions? (true? "DEBUG_EXCEPTIONS")]
+  (let [port (or (env-int "PORT") 3000)
+        freeze-assets? (env-true? "FREEZE_ASSETS")
+        debug-exceptions? (env-true? "DEBUG_EXCEPTIONS")]
     {:http {:port port
             :freeze-assets? freeze-assets?
             :debug-exceptions? debug-exceptions?}}))

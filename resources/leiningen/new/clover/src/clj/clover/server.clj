@@ -45,7 +45,7 @@
 (defn- make-routes [js-fn]
   (routes
    (GET "/" req (render-layout (js-fn req)))
-   (route/not-found "Not found! <a href=\"Back\"></a>")))
+   (route/not-found "Not found!")))
 
 (defn make-handler [{:keys [debug-exceptions? freeze-assets?]}]
   (let [{:keys [js strategy]} (asset-config freeze-assets?)]

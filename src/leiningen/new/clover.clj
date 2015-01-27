@@ -16,4 +16,5 @@
               :project-name (project-name name)}]
     (main/info "Generating fresh 'lein new' clover project.")
     (->files data
+             [".gitignore"  (render "gitignore" data)]
              ["project.clj" (render "project.clj" data)])))

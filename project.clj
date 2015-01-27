@@ -3,4 +3,5 @@
   :url "https://github.com/listora/clover"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
-  :eval-in-leiningen true)
+  :eval-in-leiningen true
+  :profiles {:dev {:dependencies [[me.raynes/fs "1.4.6"]]}})

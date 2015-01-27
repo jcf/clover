@@ -50,6 +50,7 @@
 (defn make-handler [{:keys [debug-exceptions? freeze-assets?]}]
   (let [{:keys [js strategy]} (asset-config freeze-assets?)]
     (-> (make-routes js)
-        (optimus/wrap get-assets asset-optimizations strategy)
+        (cond-> freeze-assets?
+          (optimus/wrap get-assets asset-optimizations strategy))
         (cond-> debug-exceptions? prone/wrap-exceptions)
         (wrap-defaults site-defaults))))

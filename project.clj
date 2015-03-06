@@ -1,6 +1,6 @@
 (defproject clover/lein-template "0.2.0-SNAPSHOT"
   :description "A Leiningen template for an instantly deployable Reagent web app"
-  :url "https://github.com/listora/clover"
+  :url "https://github.com/jcf/clover"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :deploy-repositories [["releases" :clojars]]

@@ -35,7 +35,7 @@ features are as follows.
 
 ## License
 
-Copyright © 2015 Listora
+Copyright © 2015 James Conroy-Finn
 
 Distributed under the MIT License.
 
